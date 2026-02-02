@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,66 +8,121 @@
     <meta name="theme-color" content="#6366f1">
     <title>PROJIFYRA - Turn Your Project Idea into Reality</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Import Map for Modern Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- Fallback/Legacy Three.js for existing script if needed, though we should migrate or keep separate -->
+    <!-- We will use the module version for the intro. The existing script might conflict if it relies on global THREE. 
+         For now, we keep the global one for the *inner* site animations if they rely on it, but the Intro will use modules. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
+
 <body>
+    <!-- 3D Intro Overlay -->
+    <div id="intro-container"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; background: #000;"></div>
+
+    <!-- Module Script for Intro -->
+    <script type="module" src="assets/js/intro.js"></script>
     <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-content">
             <div class="container_SevMini">
                 <div class="SevMini">
                     <svg width="74" height="90" viewBox="0 0 74 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M40 76.5L72 57V69.8615C72 70.5673 71.628 71.2209 71.0211 71.5812L40 90V76.5Z" fill="#396CAA"></path>
-                        <path d="M34 75.7077L2 57V69.8615C2 70.5673 2.37203 71.2209 2.97892 71.5812L34 90V75.7077Z" fill="#396DAC"></path>
+                        <path d="M40 76.5L72 57V69.8615C72 70.5673 71.628 71.2209 71.0211 71.5812L40 90V76.5Z"
+                            fill="#396CAA"></path>
+                        <path d="M34 75.7077L2 57V69.8615C2 70.5673 2.37203 71.2209 2.97892 71.5812L34 90V75.7077Z"
+                            fill="#396DAC"></path>
                         <path d="M34 76.5H40V90H34V76.5Z" fill="#396CAA"></path>
-                        <path d="M3.27905 55.593L35.2806 37.5438C36.3478 36.9419 37.6522 36.9419 38.7194 37.5438L70.721 55.593C71.7294 56.1618 71.7406 57.6102 70.7411 58.1945L39.2712 76.593C37.8682 77.4133 36.1318 77.4133 34.7288 76.593L3.25887 58.1945C2.25937 57.6102 2.27061 56.1618 3.27905 55.593Z" fill="#163C79" stroke="#396CAA"></path>
-                        <path d="M40 79L72 60V70.4001C72 71.1151 71.6183 71.7758 70.9987 72.1329L40 90V79Z" fill="#173D7A"></path>
+                        <path
+                            d="M3.27905 55.593L35.2806 37.5438C36.3478 36.9419 37.6522 36.9419 38.7194 37.5438L70.721 55.593C71.7294 56.1618 71.7406 57.6102 70.7411 58.1945L39.2712 76.593C37.8682 77.4133 36.1318 77.4133 34.7288 76.593L3.25887 58.1945C2.25937 57.6102 2.27061 56.1618 3.27905 55.593Z"
+                            fill="#163C79" stroke="#396CAA"></path>
+                        <path d="M40 79L72 60V70.4001C72 71.1151 71.6183 71.7758 70.9987 72.1329L40 90V79Z"
+                            fill="#173D7A"></path>
                         <path d="M34 79L3 61V71.5751L34 90V79Z" fill="#0665B2"></path>
                         <path id="strobe_color1" d="M58 72.5L60.5 71V74L58 75.5V72.5Z" fill="#FF715E"></path>
                         <path id="strobe_color2" d="M63 69.5L65.5 68V71L63 72.5V69.5Z" fill="#17e300b4"></path>
                         <path d="M68 66.5L70.5 65V68L68 69.5V66.5Z" fill="#FF715E"></path>
-                        <path d="M40 58.5L72 39V51.8615C72 52.5673 71.628 53.2209 71.0211 53.5812L40 72V58.5Z" fill="#396CAA"></path>
-                        <path d="M34 57.7077L2 39V51.8615C2 52.5673 2.37203 53.2209 2.97892 53.5812L34 72V57.7077Z" fill="#396DAC"></path>
+                        <path d="M40 58.5L72 39V51.8615C72 52.5673 71.628 53.2209 71.0211 53.5812L40 72V58.5Z"
+                            fill="#396CAA"></path>
+                        <path d="M34 57.7077L2 39V51.8615C2 52.5673 2.37203 53.2209 2.97892 53.5812L34 72V57.7077Z"
+                            fill="#396DAC"></path>
                         <path d="M34 58.5H40V72H34V58.5Z" fill="#396CAA"></path>
-                        <path d="M3.27905 37.593L35.2806 19.5438C36.3478 18.9419 37.6522 18.9419 38.7194 19.5438L70.721 37.593C71.7294 38.1618 71.7406 39.6102 70.7411 40.1945L39.2712 58.593C37.8682 59.4133 36.1318 59.4133 34.7288 58.593L3.25887 40.1945C2.25937 39.6102 2.27061 38.1618 3.27905 37.593Z" fill="#163C79" stroke="#396CAA"></path>
-                        <path d="M40 61L72 42V52.4001C72 53.1151 71.6183 53.7758 70.9987 54.1329L40 72V61Z" fill="#173D7A"></path>
+                        <path
+                            d="M3.27905 37.593L35.2806 19.5438C36.3478 18.9419 37.6522 18.9419 38.7194 19.5438L70.721 37.593C71.7294 38.1618 71.7406 39.6102 70.7411 40.1945L39.2712 58.593C37.8682 59.4133 36.1318 59.4133 34.7288 58.593L3.25887 40.1945C2.25937 39.6102 2.27061 38.1618 3.27905 37.593Z"
+                            fill="#163C79" stroke="#396CAA"></path>
+                        <path d="M40 61L72 42V52.4001C72 53.1151 71.6183 53.7758 70.9987 54.1329L40 72V61Z"
+                            fill="#173D7A"></path>
                         <path d="M34 61L3 43V53.5751L34 72V61Z" fill="#0665B2"></path>
                         <path d="M58 54.5L60.5 53V56L58 57.5V54.5Z" fill="#FF715E"></path>
                         <path d="M63 51.5L65.5 50V53L63 54.5V51.5Z" fill="black"></path>
                         <path id="strobe_color1_2" d="M63 51.5L65.5 50V53L63 54.5V51.5Z" fill="#FF715E"></path>
                         <path d="M68 48.5L70.5 47V50L68 51.5V48.5Z" fill="#FF715E"></path>
-                        <path d="M40 40.5L72 21V33.8615C72 34.5673 71.628 35.2209 71.0211 35.5812L40 54V40.5Z" fill="#396CAA"></path>
-                        <path d="M34 39.7077L2 21V33.8615C2 34.5673 2.37203 35.2209 2.97892 35.5812L34 54V39.7077Z" fill="#396DAC"></path>
+                        <path d="M40 40.5L72 21V33.8615C72 34.5673 71.628 35.2209 71.0211 35.5812L40 54V40.5Z"
+                            fill="#396CAA"></path>
+                        <path d="M34 39.7077L2 21V33.8615C2 34.5673 2.37203 35.2209 2.97892 35.5812L34 54V39.7077Z"
+                            fill="#396DAC"></path>
                         <path d="M34 40.5H40V54H34V40.5Z" fill="#396CAA"></path>
-                        <path d="M3.27905 19.593L35.2806 1.54381C36.3478 0.941872 37.6522 0.941872 38.7194 1.54381L70.721 19.593C71.7294 20.1618 71.7406 21.6102 70.7411 22.1945L39.2712 40.593C37.8682 41.4133 36.1318 41.4133 34.7288 40.593L3.25887 22.1945C2.25937 21.6102 2.27061 20.1618 3.27905 19.593Z" fill="#124E89" stroke="#396CAA"></path>
-                        <path d="M40 43L72 24V34.4001C72 35.1151 71.6183 35.7758 70.9987 36.1329L40 54V43Z" fill="#173D7A"></path>
+                        <path
+                            d="M3.27905 19.593L35.2806 1.54381C36.3478 0.941872 37.6522 0.941872 38.7194 1.54381L70.721 19.593C71.7294 20.1618 71.7406 21.6102 70.7411 22.1945L39.2712 40.593C37.8682 41.4133 36.1318 41.4133 34.7288 40.593L3.25887 22.1945C2.25937 21.6102 2.27061 20.1618 3.27905 19.593Z"
+                            fill="#124E89" stroke="#396CAA"></path>
+                        <path d="M40 43L72 24V34.4001C72 35.1151 71.6183 35.7758 70.9987 36.1329L40 54V43Z"
+                            fill="#173D7A"></path>
                         <path d="M34 43L3 25V35.5751L34 54V43Z" fill="#0665B2"></path>
                         <path d="M68 30.5L70.5 29V32L68 33.5V30.5Z" fill="#FF715E"></path>
                         <path id="strobe_color3" d="M58 36.5L60.5 35V38L58 39.5V36.5Z" fill="#FF715E"></path>
                         <path d="M63 33.5L65.5 32V35L63 36.5V33.5Z" fill="#FF715E"></path>
-                        <path d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z" fill="#396CAA"></path>
-                        <path d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z" fill="#396CAA"></path>
-                        <mask id="mask0_2_176" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="51" width="14" height="11">
-                            <path d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z" fill="#396CAA"></path>
+                        <path
+                            d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
+                            fill="#396CAA"></path>
+                        <path
+                            d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
+                            fill="#396CAA"></path>
+                        <mask id="mask0_2_176" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="51"
+                            width="14" height="11">
+                            <path
+                                d="M11 52.755C11 51.9801 11.8432 51.4997 12.5098 51.8947L23.5196 58.419C24.1273 58.7792 24.5 59.4332 24.5 60.1396V60.245C24.5 61.0199 23.6568 61.5003 22.9902 61.1053L11.9804 54.581C11.3727 54.2208 11 53.5668 11 52.8604V52.755Z"
+                                fill="#396CAA"></path>
                         </mask>
                         <g mask="url(#mask0_2_176)">
-                            <path d="M11.5 52.7417C11.5 51.9803 12.3349 51.5138 12.9833 51.9128L23.5482 58.4143C24.1397 58.7783 24.5 59.4231 24.5 60.1176V61.5L12.4598 54.4195C11.8651 54.0698 11.5 53.4315 11.5 52.7417V52.7417Z" fill="#163874"></path>
+                            <path
+                                d="M11.5 52.7417C11.5 51.9803 12.3349 51.5138 12.9833 51.9128L23.5482 58.4143C24.1397 58.7783 24.5 59.4231 24.5 60.1176V61.5L12.4598 54.4195C11.8651 54.0698 11.5 53.4315 11.5 52.7417V52.7417Z"
+                                fill="#163874"></path>
                         </g>
-                        <mask id="mask1_2_176" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="19" y="9" width="38" height="23">
-                            <path d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z" fill="#396CAA"></path>
+                        <mask id="mask1_2_176" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="19" y="9"
+                            width="38" height="23">
+                            <path
+                                d="M20.1902 22.0719C18.8101 21.3026 18.8252 19.3119 20.2168 18.5636L36.1054 10.0189C37.2884 9.3827 38.7116 9.3827 39.8946 10.0189L55.7832 18.5636C57.1748 19.3119 57.1899 21.3026 55.8098 22.0719L40.4345 30.6429C38.9211 31.4865 37.0789 31.4865 35.5655 30.6429L20.1902 22.0719Z"
+                                fill="#396CAA"></path>
                         </mask>
                         <g mask="url(#mask1_2_176)">
-                            <path d="M18 21.3115L36.167 11.9451C37.3171 11.3521 38.6829 11.3521 39.833 11.9451L58 21.3115L40.3567 30.7405C38.8841 31.5275 37.1159 31.5275 35.6433 30.7405L18 21.3115Z" fill="#173D7A"></path>
+                            <path
+                                d="M18 21.3115L36.167 11.9451C37.3171 11.3521 38.6829 11.3521 39.833 11.9451L58 21.3115L40.3567 30.7405C38.8841 31.5275 37.1159 31.5275 35.6433 30.7405L18 21.3115Z"
+                                fill="#173D7A"></path>
                         </g>
-                        <path d="M37.447 21.565L35 19.9799L37.6941 18.66L40.141 20.245L37.447 21.565Z" fill="#FF715E"></path>
-                        <path d="M48.9738 30.8646L47.0741 29.7745L49.1792 28.684L51.0789 29.7741L48.9738 30.8646Z" fill="#173E7B"></path>
-                        <path d="M52.0661 29.0093L50.1635 27.9242L52.2657 26.8282L54.1682 27.9133L52.0661 29.0093Z" fill="#173E7B"></path>
-                        <path id="strobe_led1" d="M55.1521 27.1464L53.2538 26.054L55.3602 24.9661L57.2585 26.0586L55.1521 27.1464Z" fill="#3A6DAB"></path>
+                        <path d="M37.447 21.565L35 19.9799L37.6941 18.66L40.141 20.245L37.447 21.565Z" fill="#FF715E">
+                        </path>
+                        <path d="M48.9738 30.8646L47.0741 29.7745L49.1792 28.684L51.0789 29.7741L48.9738 30.8646Z"
+                            fill="#173E7B"></path>
+                        <path d="M52.0661 29.0093L50.1635 27.9242L52.2657 26.8282L54.1682 27.9133L52.0661 29.0093Z"
+                            fill="#173E7B"></path>
+                        <path id="strobe_led1"
+                            d="M55.1521 27.1464L53.2538 26.054L55.3602 24.9661L57.2585 26.0586L55.1521 27.1464Z"
+                            fill="#3A6DAB"></path>
                     </svg>
                 </div>
                 <div class="Ghost">
                     <svg width="60" height="36" viewBox="0 0 60 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.96545 19.4296C0.643777 18.6484 0.658726 16.7309 1.99242 15.9705L28.0186 1.12982C29.2467 0.429534 30.7533 0.429533 31.9814 1.12982L58.0076 15.9704C59.3413 16.7309 59.3562 18.6484 58.0346 19.4296L32.5442 34.4962C30.9749 35.4238 29.0251 35.4238 27.4558 34.4962L1.96545 19.4296Z" fill="#3C4F6D"></path>
+                        <path
+                            d="M1.96545 19.4296C0.643777 18.6484 0.658726 16.7309 1.99242 15.9705L28.0186 1.12982C29.2467 0.429534 30.7533 0.429533 31.9814 1.12982L58.0076 15.9704C59.3413 16.7309 59.3562 18.6484 58.0346 19.4296L32.5442 34.4962C30.9749 35.4238 29.0251 35.4238 27.4558 34.4962L1.96545 19.4296Z"
+                            fill="#3C4F6D"></path>
                     </svg>
                 </div>
             </div>
@@ -123,14 +179,12 @@
                 <p class="hero-subtitle" data-scroll>
                     Hardware & Software • All Years • Syllabus Aligned
                 </p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciCwpnDejt6XBNqxrOEydbYkd6bEyovzK8qUP2ZDAyCnBdqg/viewform" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   class="btn btn-primary btn-hero" 
-                   data-scroll>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSciCwpnDejt6XBNqxrOEydbYkd6bEyovzK8qUP2ZDAyCnBdqg/viewform"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-hero" data-scroll>
                     <span>Submit Your Project Idea</span>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </a>
             </div>
@@ -178,35 +232,55 @@
                 <div class="mission-card" data-scroll>
                     <div class="mission-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>What We Do</h3>
-                    <p>We provide comprehensive academic project support for engineering students, from concept to completion. Our services include project development, documentation, and technical guidance tailored to your syllabus requirements.</p>
+                    <p>We provide comprehensive academic project support for engineering students, from concept to
+                        completion. Our services include project development, documentation, and technical guidance
+                        tailored to your syllabus requirements.</p>
                 </div>
                 <div class="mission-card" data-scroll>
                     <div class="mission-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>For Whom</h3>
-                    <p>Designed exclusively for engineering students across all years and streams at M. Kumarasamy College of Engineering. Whether you're in your first year or final year, we support your academic project journey.</p>
+                    <p>Designed exclusively for engineering students across all years and streams at M. Kumarasamy
+                        College of Engineering. Whether you're in your first year or final year, we support your
+                        academic project journey.</p>
                 </div>
                 <div class="mission-card" data-scroll>
                     <div class="mission-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Our Mission</h3>
-                    <p>To make quality academic projects accessible and affordable for every student. We believe in low-cost, syllabus-aligned solutions that help you learn, understand, and excel in your examinations.</p>
+                    <p>To make quality academic projects accessible and affordable for every student. We believe in
+                        low-cost, syllabus-aligned solutions that help you learn, understand, and excel in your
+                        examinations.</p>
                 </div>
             </div>
         </div>
@@ -220,8 +294,12 @@
                 <div class="feature-card" data-scroll>
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Academic Project Guidance</h3>
@@ -230,7 +308,9 @@
                 <div class="feature-card" data-scroll>
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.7 6.3C15.0861 5.91389 15.5486 5.60823 16.0599 5.40234C16.5713 5.19645 17.1206 5.09461 17.675 5.10234C18.2294 5.11007 18.7758 5.22718 19.2812 5.44659C19.7866 5.666 20.2409 5.98315 20.6174 6.38163C20.9939 6.7801 21.2851 7.25082 21.4743 7.76676C21.6636 8.28271 21.7471 8.8324 21.7194 9.38177C21.6918 9.93115 21.5536 10.4696 21.314 10.9647C21.0743 11.4599 20.7381 11.9015 20.326 12.2635L12.182 20.4075C11.5613 21.0281 10.6988 21.383 9.79751 21.383C8.89619 21.383 8.03365 21.0281 7.41301 20.4075L3.59301 16.5875C2.97236 15.9668 2.61743 15.1043 2.61743 14.203C2.61743 13.3016 2.97236 12.4391 3.59301 11.8185L11.737 3.67448C12.099 3.26238 12.5406 2.92619 13.0358 2.68654C13.5309 2.44689 14.0694 2.30869 14.6188 2.28105C15.1681 2.25342 15.7178 2.33685 16.2337 2.52613C16.7497 2.71541 17.2204 3.00652 17.619 3.38298C18.0175 3.75944 18.3346 4.21376 18.5541 4.71913C18.7735 5.2245 18.8906 5.77092 18.8983 6.32534C18.906 6.87975 18.8041 7.42901 18.5982 7.94036C18.3923 8.45171 18.0867 8.91419 17.7 9.30048L9.55701 17.4445C9.37111 17.6304 9.15012 17.7779 8.90689 17.8785C8.66366 17.9791 8.40312 18.0309 8.14024 18.0309C7.87736 18.0309 7.61681 17.9791 7.37358 17.8785C7.13035 17.7779 6.90936 17.6304 6.72346 17.4445C6.53756 17.2586 6.39006 17.0376 6.28947 16.7944C6.18888 16.5511 6.13714 16.2906 6.13714 16.0277C6.13714 15.7649 6.18888 15.5043 6.28947 15.2611C6.39006 15.0178 6.53756 14.7968 6.72346 14.6109L13.65 7.67448" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M14.7 6.3C15.0861 5.91389 15.5486 5.60823 16.0599 5.40234C16.5713 5.19645 17.1206 5.09461 17.675 5.10234C18.2294 5.11007 18.7758 5.22718 19.2812 5.44659C19.7866 5.666 20.2409 5.98315 20.6174 6.38163C20.9939 6.7801 21.2851 7.25082 21.4743 7.76676C21.6636 8.28271 21.7471 8.8324 21.7194 9.38177C21.6918 9.93115 21.5536 10.4696 21.314 10.9647C21.0743 11.4599 20.7381 11.9015 20.326 12.2635L12.182 20.4075C11.5613 21.0281 10.6988 21.383 9.79751 21.383C8.89619 21.383 8.03365 21.0281 7.41301 20.4075L3.59301 16.5875C2.97236 15.9668 2.61743 15.1043 2.61743 14.203C2.61743 13.3016 2.97236 12.4391 3.59301 11.8185L11.737 3.67448C12.099 3.26238 12.5406 2.92619 13.0358 2.68654C13.5309 2.44689 14.0694 2.30869 14.6188 2.28105C15.1681 2.25342 15.7178 2.33685 16.2337 2.52613C16.7497 2.71541 17.2204 3.00652 17.619 3.38298C18.0175 3.75944 18.3346 4.21376 18.5541 4.71913C18.7735 5.2245 18.8906 5.77092 18.8983 6.32534C18.906 6.87975 18.8041 7.42901 18.5982 7.94036C18.3923 8.45171 18.0867 8.91419 17.7 9.30048L9.55701 17.4445C9.37111 17.6304 9.15012 17.7779 8.90689 17.8785C8.66366 17.9791 8.40312 18.0309 8.14024 18.0309C7.87736 18.0309 7.61681 17.9791 7.37358 17.8785C7.13035 17.7779 6.90936 17.6304 6.72346 17.4445C6.53756 17.2586 6.39006 17.0376 6.28947 16.7944C6.18888 16.5511 6.13714 16.2906 6.13714 16.0277C6.13714 15.7649 6.18888 15.5043 6.28947 15.2611C6.39006 15.0178 6.53756 14.7968 6.72346 14.6109L13.65 7.67448"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Project Building & Explanation</h3>
@@ -239,9 +319,13 @@
                 <div class="feature-card" data-scroll>
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21.42 6.11998L12 2.41998L2.57999 6.11998C2.42158 6.18928 2.28541 6.3008 2.18633 6.44227C2.08726 6.58375 2.02912 6.74968 2.01843 6.92222C2.00775 7.09476 2.04493 7.26727 2.12607 7.42045C2.20721 7.57363 2.32925 7.70137 2.47999 7.78998L12 11.59L21.52 7.78998C21.6707 7.70137 21.7928 7.57363 21.8739 7.42045C21.9551 7.26727 21.9922 7.09476 21.9816 6.92222C21.9709 6.74968 21.9127 6.58375 21.8137 6.44227C21.7146 6.3008 21.5784 6.18928 21.42 6.11998Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 22V11.59" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M19 15.35V9.64001L12 6.65002" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M21.42 6.11998L12 2.41998L2.57999 6.11998C2.42158 6.18928 2.28541 6.3008 2.18633 6.44227C2.08726 6.58375 2.02912 6.74968 2.01843 6.92222C2.00775 7.09476 2.04493 7.26727 2.12607 7.42045C2.20721 7.57363 2.32925 7.70137 2.47999 7.78998L12 11.59L21.52 7.78998C21.6707 7.70137 21.7928 7.57363 21.8739 7.42045C21.9551 7.26727 21.9922 7.09476 21.9816 6.92222C21.9709 6.74968 21.9127 6.58375 21.8137 6.44227C21.7146 6.3008 21.5784 6.18928 21.42 6.11998Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 22V11.59" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M19 15.35V9.64001L12 6.65002" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Repair & Upgrade Support</h3>
@@ -250,10 +334,15 @@
                 <div class="feature-card" data-scroll>
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 19H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V5C19 3.89543 18.1046 3 17 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 11H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 15H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 19H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V5C19 3.89543 18.1046 3 17 3Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>PPT, Report & Viva Preparation</h3>
@@ -262,14 +351,22 @@
                 <div class="feature-card" data-scroll>
                     <div class="feature-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4.93 4.93L7.76 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16.24 16.24L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 12H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4.93 19.07L7.76 16.24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16.24 7.76L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M4.93 4.93L7.76 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M16.24 16.24L19.07 19.07" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M2 12H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M18 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M4.93 19.07L7.76 16.24" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16.24 7.76L19.07 4.93" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Real-time Teaching Support</h3>
@@ -289,20 +386,22 @@
                     <div class="bento-glow"></div>
                     <div class="bento-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 18V22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
                         </svg>
                     </div>
                     <h3>Submit Your Project Idea</h3>
-                    <p>Have a project idea? Share it with us and we'll help you bring it to life with complete guidance and support.</p>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciCwpnDejt6XBNqxrOEydbYkd6bEyovzK8qUP2ZDAyCnBdqg/viewform" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       class="btn btn-primary">
+                    <p>Have a project idea? Share it with us and we'll help you bring it to life with complete guidance
+                        and support.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciCwpnDejt6XBNqxrOEydbYkd6bEyovzK8qUP2ZDAyCnBdqg/viewform"
+                        target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                         <span>Submit Your Idea</span>
                         <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </a>
                 </div>
@@ -311,12 +410,17 @@
                 <div class="bento-card" data-scroll>
                     <div class="bento-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M15 2H9C8.44772 2 8 2.44772 8 3V5C8 5.55228 8.44772 6 9 6H15C15.5523 6 16 5.55228 16 5V3C16 2.44772 15.5523 2 15 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M15 2H9C8.44772 2 8 2.44772 8 3V5C8 5.55228 8.44772 6 9 6H15C15.5523 6 16 5.55228 16 5V3C16 2.44772 15.5523 2 15 2Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Choose an Idea</h3>
-                    <p>Syllabus-based project ideas are currently under preparation. Check back soon for curated options.</p>
+                    <p>Syllabus-based project ideas are currently under preparation. Check back soon for curated
+                        options.</p>
                     <button class="btn btn-disabled" disabled>Coming Soon</button>
                 </div>
 
@@ -324,9 +428,13 @@
                 <div class="bento-card" data-scroll>
                     <div class="bento-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Buy a Project</h3>
@@ -338,15 +446,24 @@
                 <div class="bento-card" data-scroll>
                     <div class="bento-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 1V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 21V23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4.22 4.22L5.64 5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18.36 18.36L19.78 19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M1 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M21 12H23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M4.22 19.78L5.64 18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 1V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M12 21V23" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M4.22 4.22L5.64 5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M18.36 18.36L19.78 19.78" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M1 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M21 12H23" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M4.22 19.78L5.64 18.36" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Repair / Upgrade Project</h3>
@@ -401,7 +518,8 @@
         <div class="container">
             <h2 class="section-title" data-scroll>📁 Project Files & Materials</h2>
             <p class="files-text" data-scroll>
-                All project-related files including presentations, reports, and reference documents are shared securely through Google Drive for easy access.
+                All project-related files including presentations, reports, and reference documents are shared securely
+                through Google Drive for easy access.
             </p>
             <div class="files-features" data-scroll>
                 <div class="file-item">
@@ -421,7 +539,8 @@
                     <span>Reference Files</span>
                 </div>
             </div>
-            <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-scroll>
+            <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"
+                data-scroll>
                 Access Google Drive
             </a>
         </div>
@@ -459,8 +578,11 @@
                 <div class="contact-card" data-scroll>
                     <div class="contact-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Email</h3>
@@ -469,9 +591,13 @@
                 <div class="contact-card" data-scroll>
                     <div class="contact-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Website</h3>
@@ -480,9 +606,12 @@
                 <div class="contact-card" data-scroll>
                     <div class="contact-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M5 21V7L12 3L19 7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 21V12H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M5 21V7L12 3L19 7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9 21V12H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                         </svg>
                     </div>
                     <h3>Institution</h3>
@@ -510,4 +639,5 @@
 
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>
