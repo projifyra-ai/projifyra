@@ -399,6 +399,9 @@ body.loading {
 /* ===================================
    HERO SECTION
    =================================== */
+/* ===================================
+   HERO SECTION
+   =================================== */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -408,12 +411,27 @@ body.loading {
     position: relative;
     padding: var(--spacing-3xl) 0;
     margin-top: 80px;
+    overflow: hidden;
+}
+
+/* Three.js Canvas */
+.three-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.9;
 }
 
 .hero-content {
     text-align: center;
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
 }
 
 .hero-title {
